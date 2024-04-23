@@ -62,7 +62,7 @@ def main():
             output = riza.sandbox.execute(language=language, code=block.input['code'])
             print(output)
 
-            if int(output.exit_code) > 1:
+            if int(output.exit_code) > 0:
                 raise ValueError(f"non-zero exit code {output.exit_code}")
 
             changed = True
