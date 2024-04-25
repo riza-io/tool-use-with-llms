@@ -8,7 +8,7 @@ import google.generativeai as genai
 def execute_python(code:str):
     """ Executes a Python script and returns whatever was printed to stdout.
     
-    The Python runtime does not have network or filesystem access, but does include the entire standard library. Read input from stdin and write output to stdout. 
+    The Python runtime does not have network or filesystem access, but does include the entire standard library. Read input from stdin and write output to stdout.
     """
     riza = rizaio.Riza()
     resp = riza.command.exec(
