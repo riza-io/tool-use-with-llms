@@ -7,7 +7,7 @@ def main():
     riza = rizaio.Riza()
         
     messages = [
-        {"role": "user", "content": "Can you base64 encode this message?"},
+        {"role": "user", "content": "Please base32 encode this message: purple monkey dishwasher"},
     ]
     tools = [
         {
@@ -23,20 +23,6 @@ def main():
                 },
                 "required": ["code"],
             },
-        },
-        {
-            "name": "execute_javascript",
-            "description": "Execute a JavaScript script. The JavaScript runtime does not have network or filesystem access. Read input from the process.stdout global variable and write output using console.log.",
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "code": {
-                        "type": "string",
-                        "description": "The JavaScript code to execute",
-                    }
-                },
-                "required": ["code"],
-            },
         }
     ]
 
@@ -47,7 +33,7 @@ def main():
         messages=messages,
     )
 
-    changed = False
+    tool_used = False
     for block in response.content:
         if block.type == 'tool_use':
             language = "UNKNOWN"
@@ -59,13 +45,13 @@ def main():
             print(f"Running {language}...")
             print(block.input['code'])
 
-            output = riza.sandbox.execute(language=language, code=block.input['code'])
+            output = riza.command.exec(language=language, code=block.input['code'])
             print(output)
 
             if int(output.exit_code) > 0:
                 raise ValueError(f"non-zero exit code {output.exit_code}")
 
-            changed = True
+            tool_used = True
 
             messages.append({
                 "role": "assistant",
@@ -82,8 +68,9 @@ def main():
                 ],
             })
 
-    if not changed:
+    if not tool_used:
         print("NO TOOL USE")
+        print(response)
         return
 
     response = client.beta.tools.messages.create(
