@@ -2,3 +2,6 @@ openai
 rizaio
 anthropic
 google-generativeai
+langchain
+langchain-anthropic
+langchain_community
