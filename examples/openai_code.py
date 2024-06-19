@@ -8,7 +8,7 @@ import json
 def execute_python(code:str):
     """ Executes a Python script and returns whatever was printed to stdout.
     
-    The Python runtime does not have network or filesystem access, but does include the entire standard library. Read input from stdin and write output to stdout.
+    The Python runtime does not have filesystem access, but does include the entire standard library. Make HTTP requests with the httpx or requests libraries. Read input from stdin and write output to stdout.
     """
     riza = rizaio.Riza()
     resp = riza.command.exec(
@@ -27,7 +27,7 @@ def main():
             "type": "function",
             "function": {
                 "name": "run_python",
-                "description": "Run Python to solve problems. The Python runtime does not have network or filesystem access, but does include the entire standard library. Read input from stdin and write output to stdout.",
+                "description": "Run Python to solve problems. The Python runtime does not have filesystem access, but does include the entire standard library. Make HTTP requests with the httpx or requests libraries. Read input from stdin and write output to stdout.",
                 "parameters": {
                     "type": "object",
                     "properties": {

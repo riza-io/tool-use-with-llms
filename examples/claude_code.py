@@ -12,7 +12,7 @@ def main():
     tools = [
         {
             "name": "execute_python",
-            "description": "Execute a Python script. The Python runtime does not have network or filesystem access, but does include the entire standard library. Read input from stdin and write output to stdout.",
+            "description": "Execute a Python script. The Python runtime does not have filesystem access, but does include the entire standard library. Make HTTP requests with the httpx or requests libraries. Read input from stdin and write output to stdout.",
             "input_schema": {
                 "type": "object",
                 "properties": {
